@@ -1,1 +1,1 @@
-class Klass:
+# test commit

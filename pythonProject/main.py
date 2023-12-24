@@ -739,4 +739,62 @@
 
 
 
-#Git
+# Базы данных
+
+
+
+# import sqlite3
+# # Подключение к базе данных
+# connection = sqlite3.connect('cars.db')
+#
+# # Pythin + SQL
+# sql = connection.cursor() # писать в питоне на яз sql
+#
+# # Создание таблицы
+# sql.execute('CREATE TABLE car '
+#             '(model TEXT, color TEXT, year INTEGER, mileage REAL);')
+#
+# # сохраняем данные с помощью commit() метода у объекта connection
+
+
+
+
+# # Импортируем язык SQL
+# import sqlite3
+# # Подключение к БД
+# conn = sqlite3.connect('my_users.db')
+#
+# #Python + SQL
+# sql = conn.cursor()
+#
+# # Создание таблицы
+# sql.execute('CREATE TABLE IF NOT EXISTS users (user_id INTEGER, username TEXT);')
+#
+# # Добавляем данные в таблицу
+# # sql.execute('INSERT INTO users (user_id, username) VALUES (0, "pav_ok");')
+# # sql.execute('INSERT INTO users (user_id, username) VALUES (1, "lalala");')
+# # sql.execute('INSERT INTO users (user_id, username) VALUES (2, "keeny");')
+#
+# #Вывод данных
+# print(sql.execute('SELECT user_id, username FROM users;').fetchall() )
+#
+# #Вывод данных с условием
+# # id = input('Введите id, чтобы узнать данные: ')
+# # print(sql.execute(f'SELECT * FROM users WHERE user_id  = {id};').fetchone() )
+#
+# # Удаление из таблицы
+# sql.execute('DELETE FROM users WHERE user_id = 0;')
+#
+#
+# # Обновление данных в таблице
+# sql.execute('UPDATE users SET username = "lolololo" WHERE user_id=1;')
+#
+# print(sql.execute('SELECT user_id, username FROM users;').fetchall())
+#
+# #закрепляем изменения (или после каждого дапроса, или в конце всех запросов
+# conn.commit()
+
+
+
+
+
