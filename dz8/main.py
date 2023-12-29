@@ -22,6 +22,23 @@ def view_clients():
     connection.commit()
 
 
+def find_client():
+    inp = input("Ведите критерии поиска клиента (имя или телефон): ")
+    if inp.lower() == 'имя':
+        name = input("Ведите имя клиента: ")
+        sql = connection.cursor()
+        print(sql.execute(f" SELECT * FROM clients WHERE name = '{name}' ;" ).fetchone() )
+        connection.commit()
+    elif inp.lower() == 'телефон':
+        phone = input("Ведите номер клиента: ")
+        sql = connection.cursor()
+        print(sql.execute(f" SELECT * FROM clients WHERE phone = '{phone}' ;").fetchone())
+        connection.commit()
+    else:
+        print("Введены неправильные критерии.")
+
+
+
 def view_balance():
     name = input("Введите имя клиента: ")
     sql = connection.cursor()
@@ -42,21 +59,24 @@ def delete_client():
     connection.commit()
 
 
-# Добавить клиента, список клиентов, проверка баланса, изменить баланс, удалить клиента
-action = input("Введите требуемую операцию (помощь): ")
-
-if action.lower() == "помощь":
-    print("добавить, список, баланс, изменить, удалить")
-elif action.lower() == "добавить":
-    add_client()
-elif action.lower() == "список":
-    view_clients()
-elif action.lower() == "баланс":
-    view_balance()
-elif action.lower() == "изменить":
-    balance_operation()
-elif action.lower() == "удалить":
-    delete_client()
+# Добавить клиента, список клиентов, поиск клиентов по номеру или имени, проверка баланса, изменить баланс, удалить клиента
+help = input("Введите помощь для выбора нужного действия: ")
+if help.lower() == "помощь":
+    print("добавить, список, поиск, баланс, изменить, удалить")
+    action = input("Выберите нужное действие: ")
+    if action.lower() == "добавить":
+        add_client()
+    elif action.lower() == "поиск":
+        find_client()
+    elif action.lower() == "список":
+        view_clients()
+    elif action.lower() == "баланс":
+        view_balance()
+    elif action.lower() == "изменить":
+        balance_operation()
+    elif action.lower() == "удалить":
+        delete_client()
+    else:
+        print("Неизвестная операция.")
 else:
-    print("Неизвестная операция.")
-
+    print("Неизвестная операция. Запросите помощь.")
