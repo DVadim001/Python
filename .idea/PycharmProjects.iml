@@ -4,6 +4,9 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/TelegramBot/.venv" />
       <excludeFolder url="file://$MODULE_DIR$/dz8.1/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/DZ8_dz15.1/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/DZ8_dz15.2/.venv" />
+      <excludeFolder url="file://$MODULE_DIR$/DZ8_dz15.3/.venv" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.12" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
