@@ -52,6 +52,10 @@ def balance_operation():
     print(sql.execute(f"UPDATE clients SET balance = '{balance}' WHERE name ='{name}' ;").fetchone() )
     connection.commit()
 
+
+# Отдельно функцию, которая предлагает клиенту на выбор (по поиску по имени и фамилии) срок вклада, высчитывает процент, который получится
+# и помещает отдельно высчитанный процент в отдельную колонку
+
 def delete_client():
     name = input("Введите имя клиента: ")
     sql = connection.cursor()
