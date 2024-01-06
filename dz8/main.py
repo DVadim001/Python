@@ -3,12 +3,12 @@ import sqlite3
 connection = sqlite3.connect("bank.db")
 
 sql = connection.cursor()
-sql.execute("CREATE TABLE IF NOT EXISTS clients (name TEXT, surname TEXT, phone TEXT, balance FLOAT);")
+sql.execute("CREATE TABLE IF NOT EXISTS clients (name TEXT, surname TEXT, phone TEXT, balance FLOAT, percent FLOAT);")
 connection.commit()
 
 def add_client():
     name = input("Введите имя: ")
-    surname= input("Введите фамилию: ")
+    surname = input("Введите фамилию: ")
     phone = input("Введите телефон: ")
     balance = input("Введите баланс: ")
 
@@ -16,11 +16,26 @@ def add_client():
     sql.execute(f"INSERT INTO clients (name, surname, phone, balance) VALUES('{name}', '{surname}', '{phone}', '{balance}') ;")
     connection.commit()
 
+def view_percent():
+    name = input("Введите имя: ")
+    term = int(input("Введите срок вклада в месяцах (12, 24, 36): "))
+
+    sql = connection.cursor()
+    balance = sql.execute(f"SELECT balance FROM clients WHERE name ='{name}' ;").fetchone()
+    connection.commit()
+
+    balance_2 = balance[0]
+    percent = balance_2*1/100*term
+
+    sql = connection.cursor()
+    sql.execute(f"UPDATE clients SET percent = '{percent}' WHERE name = '{name}' ;")
+    print(sql.execute(f"SELECT * FROM clients WHERE name ='{name}' ;").fetchone())
+    connection.commit()
+
 def view_clients():
     sql = connection.cursor()
     print(sql.execute("SELECT * FROM clients;").fetchall() )
     connection.commit()
-
 
 def find_client():
     inp = input("Ведите критерии поиска клиента (имя или телефон): ")
@@ -37,8 +52,6 @@ def find_client():
     else:
         print("Введены неправильные критерии.")
 
-
-
 def view_balance():
     name = input("Введите имя клиента: ")
     sql = connection.cursor()
@@ -52,10 +65,6 @@ def balance_operation():
     print(sql.execute(f"UPDATE clients SET balance = '{balance}' WHERE name ='{name}' ;").fetchone() )
     connection.commit()
 
-
-# Отдельно функцию, которая предлагает клиенту на выбор (по поиску по имени и фамилии) срок вклада, высчитывает процент, который получится
-# и помещает отдельно высчитанный процент в отдельную колонку
-
 def delete_client():
     name = input("Введите имя клиента: ")
     sql = connection.cursor()
@@ -63,10 +72,10 @@ def delete_client():
     connection.commit()
 
 
-# Добавить клиента, список клиентов, поиск клиентов по номеру или имени, проверка баланса, изменить баланс, удалить клиента
+# Добавить клиента, список клиентов, поиск клиентов по номеру или имени, проверка баланса, изменить баланс, удалить клиента, посмотреть процент
 help = input("Введите помощь для выбора нужного действия: ")
 if help.lower() == "помощь":
-    print("добавить, список, поиск, баланс, изменить, удалить")
+    print("добавить, список, поиск, баланс, процент, изменить, удалить")
     action = input("Выберите нужное действие: ")
     if action.lower() == "добавить":
         add_client()
@@ -76,6 +85,8 @@ if help.lower() == "помощь":
         view_clients()
     elif action.lower() == "баланс":
         view_balance()
+    elif action.lower() == "процент":
+        view_percent()
     elif action.lower() == "изменить":
         balance_operation()
     elif action.lower() == "удалить":
