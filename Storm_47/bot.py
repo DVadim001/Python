@@ -58,7 +58,8 @@ def get_location(message, name, number):
         location = str(geolocator.reverse(f"{message.location.latitude},"
                                       f"{message.location.longitude}") )
         db.register(user_id, name, number, location)
-        bot.send_message(user_id, "Регистрация прошла успешно!", reply_markup=telebot.types.ReplyKeyboardRemove() )
+        products = db.get_pr_but()
+        bot.send_message(user_id, "Регистрация прошла успешно!", reply_markup=bt.main_menu_buttons(products) )
 
     # Если юзер отправил номер  не по кнопке
     else:
@@ -67,4 +68,41 @@ def get_location(message, name, number):
         bot.register_next_step_handler(message, get_location, name, number)
 
 
+# Обработка команды admin
+@bot.message_handler(commands=["admin"])
+def act(message):
+    admin_id = 82836904
+    if message.from_user.id == admin_id:
+        bot.send_message(admin_id, "Выберите действие", reply_markup=bt.admin_menu() )
+        # Переход на этап выбора
+        bot.register_next_step_handler(message, admin_choose)
+    else:
+        bot.send_message(message.from_user.id, "Вы не админ!")
+
+
+#Выбор действия админом
+def admin_choose(message):
+    admin_id = 82836904
+    if message.text == "Добавить продукт":
+        bot.send_message(admin_id, "Напишите название продукта.", reply_markup=telebot.types.ReplyKeyboardRemove())
+        #Переход на этап названия
+        bot.register_next_step_handler(message, get_pr_name)
+    elif message.text == "Удалить продукт":
+        bot.send_message(admin_id, "Напишите id продукта.", reply_markup=telebot.types.ReplyKeyboardRemove())
+        #Переход на этап названия
+        bot.register_next_step_handler(message, get_pr_id)
+    elif message.text == "Изменить продукт":
+        bot.send_message(admin_id, "Напишите id продукта.", reply_markup=telebot.types.ReplyKeyboardRemove())
+        #Переход на этап названия
+        bot.register_next_step_handler(message, get_pr_change)
+    elif message.text == "Перейти в меню":
+        products = db.get_pr_but()
+        bot.send_message(admin_id, "Добро пожаловать в меню!.", reply_markup=bt.main_menu_buttons(products))
+        #Переход на этап названия
+        bot.register_next_step_handler(message, get_pr_change)
+    else:
+        bot.send_message(admin_id, "Неизвестная операция", reply_markup=bt.admin_menu())
+        bot.register_next_step_handler(message, admin_choose)
+
+#Запуск бота
 bot.polling(non_stop=True)

@@ -41,3 +41,47 @@ def checker(id):
         return True
     else:
         return False
+
+
+
+## Методы для продуктов ##
+# Вывод инфы о конкретном товаре
+
+def get_pr(id):
+    result = sql.execute("SELECT id, pr_name, pr_des, pr_count, pr_photo, pr_price FROM products WHERE id=?;",(id,))
+    return result.fetchone()
+
+# Метод для отображения продуктов в кнопках
+def get_pr_but():
+    return sql.execute("SELECT id, pr_name, pr_count FROM products;").fetchall()
+
+
+# Метод для добавления продукта
+def add_pr(name, des, count, photo, price):
+    sql.execute("INSERT INTO products (pr_name, pr_des, pr_count, pr_photo, pr_price"
+                "VALUES (?, ?, ?, ?, ?));", (name, des, count, photo, price) )
+    #Фиксируем изменения
+    connection.commit()
+
+
+#Метод дляудаления
+def del_pr(id):
+    sql.execute("DELETE FROM products WHERE id=?;",(id,))
+    connection.commit()
+
+
+#Метод для измененияколичества
+def change_pr_count(id, new_count):
+    #Текущее кол-во товара
+    now_count = sql.execute("SETECT pr_count WHERE id=?;",(id,)).fetchone()
+    #Приход товара
+    plus_count =  now_count[0] + new_count
+    sql.execute("UPDATE pruducts SET pr_count=? WHERE id=?;", (plus_count, id))
+    connection.commit()
+
+
+
+## Методы корзины
+def add_pr_to_cart(user_id, user_product, pr_amount, total):
+    sql.execute("INDERT INTO cart VALUES (?, ?, ?, ?;",(user_id, user_product, pr_amount, total))
+    connection.commit()
