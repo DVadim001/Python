@@ -1,4 +1,4 @@
-# ТГ бот регистрации
+# ТГ бот регистрации !!!сделать привязку к БД!!!!
 
 import telebot, buttons as bt
 from geopy import Nominatim
