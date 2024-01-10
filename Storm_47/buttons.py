@@ -1,4 +1,5 @@
-from  telebot import types
+from telebot import types
+
 
 # Кнопка для отправки номера
 def num_bt():
@@ -10,6 +11,7 @@ def num_bt():
     kb.add(number)
     return kb
 
+
 # Кнопка для отправки локации
 def loc_bt():
     # Создаём пространство
@@ -20,19 +22,22 @@ def loc_bt():
     kb.add(location)
     return kb
 
+
 # Кнопки выбора товара
 def main_menu_buttons(prods_from_db):
     # Создаём пространство для кнопок
     kb = types.InlineKeyboardMarkup(row_width=2)
     # Создаём сами кнопки
     cart = types.InlineKeyboardButton(text="Корзина", callback_data="cart")
-    all_products = [types.InlineKeyboardButton(text=f'{i[1]}', callback_data=f'{i[0]}') for i in prods_from_db if i[2] > 0 ]
-    #Добавляем кнопки в пространство
+    all_products = [types.InlineKeyboardButton(text=f'{i[1]}',
+                                               callback_data=f'{i[0]}') for i in prods_from_db if i[2] > 0]
+    # Добавляем кнопки в пространство
     kb.add(*all_products)
     kb.row(cart)
     return kb
 
-#Кнопка выбора количества
+
+# Кнопка выбора количества
 def choose_pr_count(amount=1, plus_or_minus=""):
     # Создаём пространство
     kb = types.InlineKeyboardMarkup(row_width=3)
@@ -42,7 +47,7 @@ def choose_pr_count(amount=1, plus_or_minus=""):
     plus = types.InlineKeyboardButton(text="+", callback_data="increment")
     minus = types.InlineKeyboardButton(text="-", callback_data="decrement")
     count = types.InlineKeyboardButton(text=str(amount), callback_data=str(amount))
-    #Алгоритм добавления и удаления кол-ва товара
+    # Алгоритм добавления и удаления кол-ва товара
     if plus_or_minus == "increment":
         new_amount = int(amount) + 1
         count = types.InlineKeyboardButton(text=str(new_amount), callback_data=str(new_amount))
@@ -51,12 +56,12 @@ def choose_pr_count(amount=1, plus_or_minus=""):
             new_amount = int(amount) - 1
             count = types.InlineKeyboardButton(text=str(new_amount), callback_data=str(new_amount))
     # Добавляем кнопки в пространство
-    kb.add( minus, count, plus)
+    kb.add(minus, count, plus)
     kb.row(back, to_cart)
     return kb
 
 
-## Кнопки для админки
+# Кнопки для админки
 # Меню админки
 def admin_menu():
     # Создаём пространство

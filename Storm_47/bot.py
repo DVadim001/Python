@@ -1,25 +1,26 @@
-import  telebot, database as db, buttons as bt
-from geopy import  Nominatim
-
+import telebot
+import database as db
+import buttons as bt
+from geopy import Nominatim
 
 TOKEN = "6780851571:AAGWoO4r31wmxmmRmdpxUAlO3ZmOL-ixmiI"
-
 # Создание объекта бота
 bot = telebot.TeleBot(TOKEN)
-
 # Использование карт
-geolocator = Nominatim(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+geolocator = Nominatim(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                                  "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
+
 
 # Обработка команды start
 @bot.message_handler(commands=["start"])
 def start_message(message):
     user_id = message.from_user.id
-
     # Проверка пользователя
     check = db.checker(user_id)
     if check:
         products = db.get_pr_but()
-        bot.send_message(user_id, f"Добро пожаловать, {message.from_user.first_name}!",reply_markup=bt.main_menu_buttons(products))
+        bot.send_message(user_id, f"Добро пожаловать, {message.from_user.first_name}!",
+                         reply_markup=bt.main_menu_buttons(products))
     else:
         bot.send_message(user_id, "Здравствуйте! Добро пожаловать! "
                                   "Давайте начнём регистрацию. Введите своё имя!")
@@ -27,13 +28,15 @@ def start_message(message):
         # Переход на этап получения имени
         bot.register_next_step_handler(message, get_name)
 
+
 # Этап получения имени
 def get_name(message):
     name = message.text
     user_id = message.from_user.id
-    bot.send_message(user_id, "Отлично! А теперь отправьте номер!", reply_markup=bt.num_bt() )
+    bot.send_message(user_id, "Отлично! А теперь отправьте номер!", reply_markup=bt.num_bt())
     # Этап получения локации
     bot.register_next_step_handler(message, get_number, name)
+
 
 # Этап получения номера
 def get_number(message, name):
@@ -41,8 +44,8 @@ def get_number(message, name):
     # Если юзер отправил номер по кнопке
     if message.contact:
         number = message.contact.phone_number
-        bot.send_message(user_id, "Супер! Последний этап: отправьте локацию!", reply_markup=bt.loc_bt() )
-        #Этап получения локации
+        bot.send_message(user_id, "Супер! Последний этап: отправьте локацию!", reply_markup=bt.loc_bt())
+        # Этап получения локации
         bot.register_next_step_handler(message, get_location, name, number)
     # Если юзер отправил номер  не по кнопке
     else:
@@ -57,10 +60,10 @@ def get_location(message, name, number):
     # Если юзер отправил локацию по кнопке
     if message.location:
         location = str(geolocator.reverse(f"{message.location.latitude},"
-                                      f"{message.location.longitude}") )
+                                          f"{message.location.longitude}"))
         db.register(user_id, name, number, location)
         products = db.get_pr_but()
-        bot.send_message(user_id, "Регистрация прошла успешно!", reply_markup=bt.main_menu_buttons(products) )
+        bot.send_message(user_id, "Регистрация прошла успешно!", reply_markup=bt.main_menu_buttons(products))
 
     # Если юзер отправил номер  не по кнопке
     else:
@@ -74,38 +77,38 @@ def get_location(message, name, number):
 def act(message):
     admin_id = 82836904
     if message.from_user.id == admin_id:
-        bot.send_message(admin_id, "Выберите действие", reply_markup=bt.admin_menu() )
+        bot.send_message(admin_id, "Выберите действие", reply_markup=bt.admin_menu())
         # Переход на этап выбора
         bot.register_next_step_handler(message, admin_choose)
     else:
         bot.send_message(message.from_user.id, "Вы не админ!")
 
 
-#Выбор действия админом
+# Выбор действия админом
 def admin_choose(message):
     admin_id = 82836904
     if message.text == "Добавить продукт":
         bot.send_message(admin_id, "Напишите название продукта.", reply_markup=telebot.types.ReplyKeyboardRemove())
-        #Переход на этап названия
+        # Переход на этап названия
         bot.register_next_step_handler(message, get_pr_name)
     elif message.text == "Удалить продукт":
         check = db.check_pr()
         if check:
             bot.send_message(admin_id, "Напишите id продукта.", reply_markup=telebot.types.ReplyKeyboardRemove())
-            #Переход на этап названия
+            # Переход на этап названия
             bot.register_next_step_handler(message, get_pr_id)
         else:
             bot.send_message(admin_id, "Продуктов в базе пока нет!")
-            bot.register_next_step_handler(message,admin_choose)
+            bot.register_next_step_handler(message, admin_choose)
     elif message.text == "Изменить продукт":
         check = db.check_pr()
         if check:
             bot.send_message(admin_id, "Напишите id продукта.", reply_markup=telebot.types.ReplyKeyboardRemove())
-            #Переход на этап названия
+            # Переход на этап названия
             bot.register_next_step_handler(message, get_pr_change)
         else:
             bot.send_message(admin_id, "Продуктов в базе пока нет!")
-            bot.register_next_step_handler(message,admin_choose)
+            bot.register_next_step_handler(message, admin_choose)
     elif message.text == "Перейти в меню":
         products = db.get_pr_but()
         bot.send_message(admin_id, "Добро пожаловать в меню!.", reply_markup=bt.main_menu_buttons(products))
@@ -121,11 +124,12 @@ def get_pr_name(message):
         pr_name = message.text
         bot.send_message(admin_id, "Отлично, теперь придумайте описание")
         # Переход на жтап получения описания
-        bot.register_next_step_handler(message,get_pr_des, pr_name)
+        bot.register_next_step_handler(message, get_pr_des, pr_name)
     else:
         bot.send_message(admin_id, "Отлично, теперь придумайте описание")
         # Переход на жтап получения описания
         bot.register_next_step_handler(message, get_pr_name)
+
 
 def get_pr_des(message, pr_name):
     admin_id = 82836904
@@ -170,7 +174,7 @@ def get_pr_photo(message, pr_name, pr_des, pr_count):
 
 
 # Этап получения цены
-def get_pr_price(message,pr_name, pr_des, pr_count, pr_photo):
+def get_pr_price(message, pr_name, pr_des, pr_count, pr_photo):
     admin_id = 82836904
     try:
         pr_price = float(message.text)
@@ -194,15 +198,16 @@ def get_pr_id(message):
             db.del_pr(pr_id)
             bot.send_message(admin_id, "Продукт удалён успешно, что-то ещё?", reply_markup=bt.admin_menu())
             # Переход на этап выбора
-            bot.register_next_step_handler(message,admin_choose)
+            bot.register_next_step_handler(message, admin_choose)
         else:
             bot.send_message(admin_id, "Такого продукта нет!")
             # Возврат на получение id
-            bot.register_next_step_handler(message ,get_pr_id)
+            bot.register_next_step_handler(message, get_pr_id)
     except ValueError or telebot.apihelper.ApiTelegramException:
         bot.send_message(admin_id, "Ошибка в id. Попытайтесь ещё раз!")
         # Возврат на этап получения id
         bot.register_next_step_handler(message, get_pr_id)
+
 
 # Этап изменения кол-ва товара
 def get_pr_change(message):
@@ -224,13 +229,14 @@ def get_pr_change(message):
         # Возврат на этап получения id
         bot.register_next_step_handler(message, get_pr_change)
 
+
 # Этап прихода
 def get_amount(message, pr_id):
     admin_id = 82836904
     try:
         new_amount = int(message.text)
         db.change_pr_count(pr_id, new_amount)
-        bot.send_message(admin_id, "Количество продукта изменено успешно, что-то ещё?",reply_markup=bt.admin_menu())
+        bot.send_message(admin_id, "Количество продукта изменено успешно, что-то ещё?", reply_markup=bt.admin_menu())
         # переход на этап выбота
         bot.register_next_step_handler(message, admin_choose)
     except ValueError or telebot.apihelper.ApiTelegramException:
@@ -239,7 +245,5 @@ def get_amount(message, pr_id):
         bot.register_next_step_handler(message, get_amount, pr_id)
 
 
-
-
-#Запуск бота
+# Запуск бота
 bot.polling(non_stop=True)

@@ -1,7 +1,6 @@
 import sqlite3
 
 connection = sqlite3.connect("shop.db", check_same_thread=False)
-
 sql = connection.cursor()
 
 # Таблица пользователей
@@ -9,7 +8,6 @@ sql.execute("CREATE TABLE IF NOT EXISTS users (id INTEGER, "
             "name TEXT, "
             "number TEXT, "
             "location TEXT);")
-
 # Таблица продуктов
 sql.execute("CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY AUTOINCREMENT, "
             "pr_name TEXT, "
@@ -17,7 +15,6 @@ sql.execute("CREATE TABLE IF NOT EXISTS products (id INTEGER PRIMARY KEY AUTOINC
             "pr_count INTEGER,"
             " pr_photo TEXT, "
             "pr_price REAL);")
-
 # Таблице корзины
 sql.execute("CREATE TABLE IF NOT EXISTS cart (user_id INTEGER, "
             "user_product TEXT, "
@@ -25,31 +22,29 @@ sql.execute("CREATE TABLE IF NOT EXISTS cart (user_id INTEGER, "
             "total REAL) ;")
 
 
-
-## Методы для пользователя ##
+# Методы для пользователя
 # Регистрация
 def register(id, name, number, location):
-    sql.execute("INSERT INTO users VALUES(?, ?, ?, ?);", (id, name, number, location) )
+    sql.execute("INSERT INTO users VALUES(?, ?, ?, ?);", (id, name, number, location))
     # Фиксируем изменение
     connection.commit()
 
 
 # Проверка на наличие пользователя в БД
 def checker(id):
-    check = sql.execute("SELECT id FROM users WHERE id=?;", (id,) )
+    check = sql.execute("SELECT id FROM users WHERE id=?;", (id,))
     if check.fetchone():
         return True
     else:
         return False
 
 
-
-## Методы для продуктов ##
+# Методы для продуктов
 # Вывод инфы о конкретном товаре
-
 def get_pr(id):
-    result = sql.execute("SELECT pr_name, pr_des, pr_count, pr_photo, pr_price FROM products WHERE id=?;",(id,))
+    result = sql.execute("SELECT pr_name, pr_des, pr_count, pr_photo, pr_price FROM products WHERE id=?;", (id,))
     return result.fetchone()
+
 
 # Метод для отображения продуктов в кнопках
 def get_pr_but():
@@ -58,25 +53,27 @@ def get_pr_but():
 
 # Метод для добавления продукта
 def add_pr(name, des, count, photo, price):
-    sql.execute("INSERT INTO products (pr_name, pr_des, pr_count, pr_photo, pr_price) VALUES (?, ?, ?, ?, ?);", (name, des, count, photo, price) )
-    #Фиксируем изменения
+    sql.execute("INSERT INTO products (pr_name, pr_des, pr_count, pr_photo, pr_price) VALUES (?, ?, ?, ?, ?);",
+                (name, des, count, photo, price))
+    # Фиксируем изменения
     connection.commit()
 
 
-#Метод для удаления
+# Метод для удаления
 def del_pr(id):
-    sql.execute("DELETE FROM products WHERE id=?;",(id,))
+    sql.execute("DELETE FROM products WHERE id=?;", (id,))
     connection.commit()
 
 
-#Метод для изменения количества
+# Метод для изменения количества
 def change_pr_count(id, new_count):
     # Текущее кол-во товара
-    now_count = sql.execute("SETECT pr_count WHERE id=?;",(id,)).fetchone()
+    now_count = sql.execute("SELECT pr_count FROM products WHERE id=?;", (id,)).fetchone()
     # Приход товара
-    plus_count =  now_count[0] + new_count
-    sql.execute("UPDATE pruducts SET pr_count=? WHERE id=?;", (plus_count, id))
+    plus_count = now_count[0] + new_count
+    sql.execute("UPDATE products SET pr_count=? WHERE id=?;", (plus_count, id))
     connection.commit()
+
 
 # Метод для проверки наличия продуктов в базе
 def check_pr():
@@ -88,14 +85,13 @@ def check_pr():
 
 # Метод для проверки наличия продукта по id
 def check_pr_id(id):
-    if sql.execute("SELECT id FROM products WHERE id-?;", (id,)).fetchone():
+    if sql.execute("SELECT id FROM products WHERE id=?;", (id,)).fetchone():
         return True
     else:
         return False
 
 
-
-## Методы корзины
+# Методы корзины
 def add_pr_to_cart(user_id, user_product, pr_amount, total):
-    sql.execute("INDERT INTO cart VALUES (?, ?, ?, ?;",(user_id, user_product, pr_amount, total))
+    sql.execute("INSERT INTO cart VALUES (?, ?, ?, ?;", (user_id, user_product, pr_amount, total))
     connection.commit()

@@ -1,5 +1,5 @@
 # ТГ бот конвертер
-import  telebot
+import telebot
 import buttons as bt
 
 bot = telebot.TeleBot("6801993152:AAFKksnzFYxVMsDZrzCcpEKvgGrOFLq3OQE")

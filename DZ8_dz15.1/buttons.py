@@ -1,5 +1,6 @@
 from telebot import types
 
+
 def sum_usd():
     # Создание пространства
     kb = types.ReplyKeyboardMarkup(resize_keyboard=True)
