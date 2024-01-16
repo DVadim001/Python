@@ -1,4 +1,5 @@
 from telebot import types
+import database as db
 
 
 # Кнопка для отправки номера
@@ -29,9 +30,12 @@ def main_menu_buttons(prods_from_db):
     kb = types.InlineKeyboardMarkup(row_width=2)
     # Создаём сами кнопки
     cart = types.InlineKeyboardButton(text="Корзина", callback_data="cart")
-    all_products = [types.InlineKeyboardButton(text=f'{i[1]}',
-                                               callback_data=f'{i[0]}') for i in prods_from_db if i[2] > 0]
-    # Добавляем кнопки в пространство
+    # Создание кнопки для каждого продукта
+    all_products = [types.InlineKeyboardButton(text=f'{i[1]}', callback_data=f'{i[0]}') for i in prods_from_db if i[2] > 0]
+    # for prod in prods_from_db:
+    #     all_products = types.InlineKeyboardButton(text=prod[1], callback_data=str(prod[0]))
+    #
+    #     # Добавляем кнопки в пространство
     kb.add(*all_products)
     kb.row(cart)
     return kb
@@ -86,4 +90,18 @@ def confirm():
     but2 = types.KeyboardButton("Нет")
     # Добавляем кнопки в пространство
     kb.add(but1, but2)
+    return kb
+
+
+# Кнопки для корзины
+def cart_buttons():
+    # Создаём пространство длякнопок
+    kb = types.InlineKeyboardMarkup(row_width=2)
+    # Создаём сами кнопки
+    order = types.InlineKeyboardButton(text='Оформить заказ', callback_data='order')
+    clear = types.InlineKeyboardButton(text='Очистить корзину', callback_data='clear')
+    back = types.InlineKeyboardButton(text='Назад', callback_data='back')
+    # Добавляем кнопки в пространство
+    kb.add(order, clear)
+    kb.row(back)
     return kb
