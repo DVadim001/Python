@@ -47,6 +47,12 @@ def begin_registration(message):
     bot.register_next_step_handler(message, get_name)
 
 
+# def begin_registration(message, chat_id):
+#     user_id = message.from_user.id
+#     reg_begin = lang_choice(chat_id, "reg_begin")
+#     bot.send_message(user_id,  reg_begin)
+
+
 def get_name(message):
     name = message.text
     user_id = message.from_user.id
@@ -87,13 +93,10 @@ def choose_lang(call):
     user_id = call.from_user.id
     selected_lang[user_id] = call.data
     set_lang = lang_choice(user_id, "set_lang")
-    if call.data == "rus" or call.data == "eng":
+    if call.data == "rus":
         bot.send_message(chat_id, set_lang, reply_markup=telebot.types.ReplyKeyboardRemove())
-        begin_registration(chat_id)
-
-
-
-
+    elif call.data == "eng":
+        bot.send_message(chat_id, set_lang, reply_markup=telebot.types.ReplyKeyboardRemove())
 
 
 # def choose_lang(call):
@@ -101,10 +104,9 @@ def choose_lang(call):
 #     user_id = call.from_user.id
 #     selected_lang[user_id] = call.data
 #     set_lang = lang_choice(user_id, "set_lang")
-#     if call.data == "rus":
+#     if call.data == "rus" or call.data == "eng":
 #         bot.send_message(chat_id, set_lang, reply_markup=telebot.types.ReplyKeyboardRemove())
-#     elif call.data == "eng":
-#         bot.send_message(chat_id, set_lang, reply_markup=telebot.types.ReplyKeyboardRemove())
+#         begin_registration(chat_id)
 
 
 bot.polling(non_stop=True)
