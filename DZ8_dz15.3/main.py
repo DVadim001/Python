@@ -27,45 +27,57 @@ def lang_choice(user_id, keyword):
     return texts[keyword][user_lang]
 
 
-
 @bot.message_handler(commands=["start"])
 def start(message):
     user_id = message.from_user.id
     check = db.check_in_base(user_id)
+    lang_choose = lang_choice(user_id, "lang_choose")
     if check:
         bot.send_message(user_id, f"Здравствуйте, '{message.from_user.first_name}', выберите удобный для вас язык.", reply_markup=bt.lang())
+        bot.register_next_step_handler(message, begin_registration)
     else:
-        bot.send_message(user_id,f"Добро пожаловать. Выберите удобный для вас язык",reply_markup=bt.lang())
-        bot.send_message(user_id,f"Начало регистрации. Введите имя.")
-        bot.register_next_step_handler(message, get_name)
+        bot.send_message(user_id, lang_choose, reply_markup=bt.lang())
+        bot.register_next_step_handler(message, begin_registration)
+
+
+def begin_registration(message):
+    user_id = message.from_user.id
+    reg_begin = lang_choice(user_id, "reg_begin")
+    bot.send_message(user_id, reg_begin)
+    bot.register_next_step_handler(message, get_name)
 
 
 def get_name(message):
     name = message.text
     user_id = message.from_user.id
-    bot.send_message(user_id,"Имя получено, отправьте номер", reply_markup=bt.num_bt())
+    name_res = lang_choice(user_id, "name_res")
+    bot.send_message(user_id, name_res, reply_markup=bt.num_bt())
     bot.register_next_step_handler(message, get_num, name)
 
 
 def get_num(message, name):
     user_id = message.from_user.id
+    loc_res = lang_choice(user_id, "loc_res")
+    send_but = lang_choice(user_id, "send_but")
     if message.contact:
         num = message.contact.phone_number
-        bot.send_message(user_id,"Номер получен, отправьте локацию", reply_markup=bt.loc_bt())
+        bot.send_message(user_id, loc_res, reply_markup=bt.loc_bt())
         bot.register_next_step_handler(message, get_loc, name, num)
     else:
-        bot.send_message(user_id, "Отправьте по кнопке.", reply_markup=bt.num_bt())
+        bot.send_message(user_id, send_but, reply_markup=bt.num_bt())
         bot.register_next_step_handler(message, get_num, name)
 
 
 def get_loc(message, name, num):
     user_id = message.from_user.id
+    reg_suc = lang_choice(user_id, "reg_suc")
+    send_but = lang_choice(user_id, "send_but")
     if message.location:
         loc = str(geo.reverse(f"{message.location.latitude},"f"{message.location.longitude}"))
         db.registration(user_id, name, num, loc)
-        bot.send_message(user_id,"Регистрация успешна", reply_markup=telebot.types.ReplyKeyboardRemove())
+        bot.send_message(user_id, reg_suc, reply_markup=telebot.types.ReplyKeyboardRemove())
     else:
-        bot.send_message(user_id, "Отправьте по кнопке.", reply_markup=bt.loc_bt())
+        bot.send_message(user_id, send_but, reply_markup=bt.loc_bt())
         bot.register_next_step_handler(message, get_loc, name, num)
 
 
@@ -74,11 +86,25 @@ def choose_lang(call):
     chat_id = call.message.chat.id
     user_id = call.from_user.id
     selected_lang[user_id] = call.data
-    if call.data == "rus":
-        bot.send_message(chat_id, "Установлен язык: Русский",reply_markup=telebot.types.ReplyKeyboardRemove())
-    elif call.data == "eng":
-        bot.send_message(chat_id, "Your language has beet set to: English", reply_markup=telebot.types.ReplyKeyboardRemove())
+    set_lang = lang_choice(user_id, "set_lang")
+    if call.data == "rus" or call.data == "eng":
+        bot.send_message(chat_id, set_lang, reply_markup=telebot.types.ReplyKeyboardRemove())
+        begin_registration(chat_id)
 
+
+
+
+
+
+# def choose_lang(call):
+#     chat_id = call.message.chat.id
+#     user_id = call.from_user.id
+#     selected_lang[user_id] = call.data
+#     set_lang = lang_choice(user_id, "set_lang")
+#     if call.data == "rus":
+#         bot.send_message(chat_id, set_lang, reply_markup=telebot.types.ReplyKeyboardRemove())
+#     elif call.data == "eng":
+#         bot.send_message(chat_id, set_lang, reply_markup=telebot.types.ReplyKeyboardRemove())
 
 
 bot.polling(non_stop=True)
