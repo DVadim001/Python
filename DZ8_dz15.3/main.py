@@ -18,7 +18,9 @@ texts = {"welcome_message": {"rus": "Здравствуйте.", "eng": "Welcome
          "reg_suc": {"rus":"Регистрация успешна.", "eng": "Registration successful."},
          "lang_choose": {"rus":"Добро пожаловать. Выберите удобный для вас язык", "eng": "Welcome. Choose your preferred language"},
          "set_lang": {"rus":"Установлен язык: Русский.", "eng": "Your language has beet set to: English"},
+         "wait": {"rus":"Ожидайте дальнейшей доработки", "eng": "Wait next repair"},
          # "": {"rus":"", "eng": ""},
+
          }
 
 
@@ -32,9 +34,10 @@ def start(message):
     user_id = message.from_user.id
     check = db.check_in_base(user_id)
     lang_choose = lang_choice(user_id, "lang_choose")
+    lang_choose1 = lang_choice(user_id, "wait")
     if check:
-        bot.send_message(user_id, f"Здравствуйте, '{message.from_user.first_name}', выберите удобный для вас язык.", reply_markup=bt.lang())
-        bot.register_next_step_handler(message, begin_registration)
+        # bot.send_message(user_id, f"Здравствуйте, '{message.from_user.first_name}', выберите удобный для вас язык.", reply_markup=bt.lang())
+        bot.send_message(user_id, lang_choose1)
     else:
         bot.send_message(user_id, lang_choose, reply_markup=bt.lang())
         bot.register_next_step_handler(message, begin_registration)
