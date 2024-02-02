@@ -1,13 +1,10 @@
 spis = ['Pavel', 'Sasha', 'Ivan', 'Petya']
-
 print(spis)
-
-# Как вставлять новое имя на место того, которое удалили (на тот же индекс)?
 edited_name = input('Введите имя для редактирования: ')
-
+# Получаем индекс удаляемого имени перед его удалением
+index_to_replace = spis.index(edited_name)
 spis.remove(edited_name)
-
 new_name = input('Введите новое имя: ')
-
-new_name = spis.append(new_name)
+# Вставляем новое имя на запомненный индекс
+spis.insert(index_to_replace, new_name)
 print(spis)

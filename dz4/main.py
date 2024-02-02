@@ -14,7 +14,7 @@ num = [i for i in list4 if i % 2 == 0]
 print(num)
 
 list5 = ['Pavel', 'Ivan', 'Timur', 'Oleg', 'Vanya', 'Olga']
-name = [i for i in list5 if 'a' or 'o' in i]
+name = [i for i in list5 if 'a' in i or 'o' in i]
 print(name)
 
 numbers = [i for i in range(1, 21)]

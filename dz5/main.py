@@ -69,7 +69,7 @@ closed_classrooms = []
 
 
 def register(name, classroom):
-    if not pupils[name] in pupils['Ученики']:
+    if pupils[name] not in pupils['Ученики']:
         pupils['Ученики'][name] = classroom
         open_classrooms.remove(name)
         closed_classrooms.append(name)
@@ -94,10 +94,7 @@ if action.lower() == 'добавить':
     print(open_classrooms)
     pupils_room = input('Выберите класс: ')
     register(pupils_name, pupils_room)
-    # if pupils_room in open_classrooms:
-    #     register(pupils_name, pupils_room)
-    # else:
-    #     print('Класс занят.')
+
 
 elif action.lower() == 'убрать':
     pupils_name = input('Введите имя: ')

@@ -25,7 +25,7 @@ def start_message(message):
         products = db.get_pr_but()
         bot.send_message(user_id, f"Добро пожаловать, {message.from_user.first_name}!",
                          reply_markup=telebot.types.ReplyKeyboardRemove())
-        bot.send_message(user_id, f"Выберите пункт меню:", reply_markup=bt.main_menu_buttons(products))
+        bot.send_message(user_id, "Выберите пункт меню:", reply_markup=bt.main_menu_buttons(products))
     else:
         bot.send_message(user_id, "Здравствуйте! Добро пожаловать! "
                                   "Давайте начнём регистрацию. Введите своё имя!")
@@ -250,7 +250,7 @@ def get_pr_count(message, pr_name, pr_des):
                                    " загрузите фото товара и отправьте прямую ссылку на него!")
         # Переход на этап получения фото
         bot.register_next_step_handler(message, get_pr_photo, pr_name, pr_des, pr_count)
-    except ValueError or telebot.apihelper.ApiTelegramException:
+    except (ValueError, telebot.apihelper.ApiTelegramException):
         bot.send_message(admin_id, "Ошибка в количестве. Попытайтесь ещё раз.")
         # Возврат на этап получения количества
         bot.register_next_step_handler(message, get_pr_count, pr_name, pr_des)
@@ -280,7 +280,7 @@ def get_pr_price(message, pr_name, pr_des, pr_count, pr_photo):
                          reply_markup=bt.admin_menu())
         # Переход на этап выбора
         bot.register_next_step_handler(message, admin_choose)
-    except ValueError or telebot.apihelper.ApiTelegramException:
+    except (ValueError, telebot.apihelper.ApiTelegramException):
         bot.send_message(admin_id, "Ошибка в цене. Попытайтесь ещё раз.")
         # Возврат на этап получения цены
         bot.register_next_step_handler(message, get_pr_price, pr_name, pr_des, pr_count, pr_photo)
@@ -302,7 +302,7 @@ def get_pr_id(message):
             bot.send_message(admin_id, "Такого продукта нет.")
             # Возврат на получение id
             bot.register_next_step_handler(message, get_pr_id)
-    except ValueError or telebot.apihelper.ApiTelegramException:
+    except (ValueError, telebot.apihelper.ApiTelegramException):
         bot.send_message(admin_id, "Ошибка в id. Попытайтесь ещё раз.")
         # Возврат на этап получения id
         bot.register_next_step_handler(message, get_pr_id)
@@ -322,7 +322,7 @@ def get_pr_change(message):
             bot.send_message(admin_id, "Такого продукта нет.")
             # Возврат на получение id
             bot.register_next_step_handler(message, get_pr_change)
-    except ValueError or telebot.apihelper.ApiTelegramException:
+    except (ValueError, telebot.apihelper.ApiTelegramException):
         bot.send_message(admin_id, "Ошибка в id. Попытайтесь ещё раз.")
         # Возврат на этап получения id
         bot.register_next_step_handler(message, get_pr_change)
@@ -338,7 +338,7 @@ def get_amount(message, pr_id):
                          reply_markup=bt.admin_menu())
         # переход на этап выбора
         bot.register_next_step_handler(message, admin_choose)
-    except ValueError or telebot.apihelper.ApiTelegramException:
+    except (ValueError, telebot.apihelper.ApiTelegramException):
         bot.send_message(admin_id, "Ошибка в количестве. Попытайтесь ещё раз!")
         # Возврат на этап получения id
         bot.register_next_step_handler(message, get_amount, pr_id)

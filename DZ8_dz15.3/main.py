@@ -52,12 +52,6 @@ def begin_registration(message):
     bot.register_next_step_handler(message, get_name)
 
 
-# def begin_registration(message, chat_id):
-#     user_id = message.from_user.id
-#     reg_begin = lang_choice(chat_id, "reg_begin")
-#     bot.send_message(user_id,  reg_begin)
-
-
 def get_name(message):
     name = message.text
     user_id = message.from_user.id
@@ -84,7 +78,7 @@ def get_loc(message, name, num):
     reg_suc = lang_choice(user_id, "reg_suc")
     send_but = lang_choice(user_id, "send_but")
     if message.location:
-        loc = str(geo.reverse(f"{message.location.latitude},"f"{message.location.longitude}"))
+        loc = str(geo.reverse(f"{message.location.latitude}", f"{message.location.longitude}"))
         db.registration(user_id, name, num, loc)
         bot.send_message(user_id, reg_suc, reply_markup=telebot.types.ReplyKeyboardRemove())
     else:

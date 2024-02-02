@@ -35,7 +35,7 @@ def convert_sum_to_usd(message):
         bot.send_message(user_id, f"Ваша сумма в суммах '{message.text}'из составляет '{result}' usd",
                          reply_markup=bt.sum_usd())
     except:
-        bot.send_message(user_id, f"Введите числовое значение!")
+        bot.send_message(user_id, "Введите числовое значение!")
 
 
 def convert_usd_to_sum(message):
@@ -46,7 +46,7 @@ def convert_usd_to_sum(message):
         result = sum_amount * convert_rate
         bot.send_message(user_id, f"Ваша сумма из составляет '{result}' сум", reply_markup=bt.sum_usd())
     except:
-        bot.send_message(user_id, f"Введите числовое значение!")
+        bot.send_message(user_id, "Введите числовое значение!")
 
 
 bot.polling(non_stop=True)
