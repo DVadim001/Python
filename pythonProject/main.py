@@ -118,7 +118,6 @@
 # print(answer)
 
 
-
 # nums = [i for i in range(1,21)]
 # nums_chetn = [i for i in nums if i%2  == 0]
 #
@@ -219,10 +218,7 @@
 # print(prazd.get(day))
 
 
-
-
-
-# Фунуции
+# Функции
 
 # def create_list():
 #     my_list = []
@@ -240,7 +236,6 @@
 #     print(3+5)
 #
 # calc()
-
 
 
 # def craete_list():
@@ -275,13 +270,7 @@
 # print(requests.post(link).status_code)
 
 
-
-
-
-
 # Функции
-
-
 
 
 # a = lambda x: 2*x+5
@@ -300,13 +289,10 @@
 # print(p(storona))
 
 
-
-
 # def spam(a):
 #     print(a+6)
 #
 # spam(5)
-
 
 
 # def spam(a,b,c=7):
@@ -315,19 +301,14 @@
 # spam(3,5, 8)
 
 
-
 # numbers = [i for i in range(1,21)]
 # chet = list(filter(lambda x: (x%2==0), numbers))
 # print(chet)
 
 
-
-
 # numbers1 = [i for i in range(1,41)]
 # squares = list(map(lambda e: e**2, numbers1))
 # print(squares)
-
-
 
 
 # def sum(a,b):
@@ -336,13 +317,10 @@
 # sum(3,5)
 
 
-
 # def spam(*args):
 #     return args
 #
 # print(spam(1,2,3,'Hello'))
-
-
 
 
 # def spam(*args):
@@ -352,14 +330,10 @@
 # spam(1,2,3,1,2,3,'4','Hello')
 
 
-
-
-
 # def spam(**kwargs):
 #     return kwargs
 #
 # print(spam(name = 'my1', age = 23))
-
 
 
 # def spam(**kwargs):
@@ -367,8 +341,6 @@
 #         print (k,v)
 #
 # spam(name='my1', age=23)
-
-
 
 
 # while True:
@@ -384,17 +356,7 @@
 #     chisla()
 
 
-
-
-
-
-
-
-
 # Классы и методы
-
-
-
 
 
 # class User:
@@ -402,8 +364,6 @@
 #
 # user1 = User()
 # print(user1.name)
-
-
 
 
 # class Person:
@@ -417,10 +377,6 @@
 #     max_speed = 300
 
 
-
-
-
-
 # class Car:
 #     def __init__ (self, model, color, year):
 #         self.model = model
@@ -432,10 +388,6 @@
 # print(chevrolet.year)
 
 
-
-
-
-
 # class Comment:
 #     def __init__(self, username, text, likes=0):
 #         self.username = username
@@ -445,12 +397,6 @@
 #
 # com1 = Comment(username='One', text='Message', likes='yes')
 # print(com1.username, com1.text, com1.likes)
-
-
-
-
-
-
 
 
 # class Car:
@@ -477,9 +423,6 @@
 # gentra.stop()
 
 
-
-
-
 # class User:
 #     def __init__(self, name, mail, age, number):
 #         self.name = name
@@ -495,9 +438,6 @@
 #
 #     def change_mail(self, new_mail):
 #         self.mail = new_mail
-
-
-
 
 
 # clients = {}
@@ -546,12 +486,7 @@
 #         print('Неизвестная операция')
 
 
-
-
-
-
 # Наследование и концепция ООП
-
 
 
 # def x(values):
@@ -559,11 +494,6 @@
 # v=[1,2,3,4]
 # x(v)
 # print(v)
-
-
-
-
-
 
 
 # class Animal:
@@ -576,9 +506,6 @@
 #
 # Horse1 = Horse()
 # Horse1.make_sound('text')
-
-
-
 
 
 # class Car:
@@ -594,8 +521,6 @@
 #         self.sponsor = sponsor
 
 
-
-
 # class MyClass:
 #     def __init__(self,value):
 #         self.value = value
@@ -605,9 +530,6 @@
 #         return value**2
 #
 # print(MyClass.multiply(4))
-
-
-
 
 
 # class Rectangle:
@@ -624,9 +546,6 @@
 #
 # rectangle.width = 6
 # print(rectangle.area)
-
-
-
 
 
 # class Worker:
@@ -647,9 +566,6 @@
 # pavel = HR('Pavel', 'HR')
 #
 # print(pavel.view_position(jordan))
-
-
-
 
 
 # class Player:
@@ -690,9 +606,6 @@
 #
 #     def save(self):
 #         return 'Поймал мяч'
-
-
-
 
 
 # class BankAccaunt:
@@ -736,11 +649,7 @@
 #         print('Неизвестная операция.')
 
 
-
-
-
 # Базы данных
-
 
 
 # import sqlite3
@@ -757,9 +666,7 @@
 # # сохраняем данные с помощью commit() метода у объекта connection
 
 
-
-
-# # Импортируем язык SQL
+# Импортируем язык SQL
 # import sqlite3
 # # Подключение к БД
 # conn = sqlite3.connect('my_users.db')
@@ -795,12 +702,4 @@
 # conn.commit()
 
 
-
-
-
 # Телеграм боты (см. проект TelegramBot)
-
-
-
-
-

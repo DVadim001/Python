@@ -32,6 +32,7 @@ def update_student_by_name():
     print(sql.execute("SELECT * FROM students;").fetchall())
     connection.commit()
 
+
 def delete_student():
     name = input("Введите имя студента для его удаления: ")
     sql = connection.cursor()

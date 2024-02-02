@@ -1,4 +1,4 @@
-spis = ['Pavel','Sasha','Ivan','Petya']
+spis = ['Pavel', 'Sasha', 'Ivan', 'Petya']
 
 print(spis)
 

@@ -1,5 +1,5 @@
 from telebot import types
-import database as db
+# import database as db
 
 
 # Кнопка для отправки номера
@@ -31,7 +31,8 @@ def main_menu_buttons(prods_from_db):
     # Создаём сами кнопки
     cart = types.InlineKeyboardButton(text="Корзина", callback_data="cart")
     # Создание кнопки для каждого продукта
-    all_products = [types.InlineKeyboardButton(text=f'{i[1]}', callback_data=f'{i[0]}') for i in prods_from_db if i[2] > 0]
+    all_products = [types.InlineKeyboardButton(text=f'{i[1]}',
+                                               callback_data=f'{i[0]}') for i in prods_from_db if i[2] > 0]
     # for prod in prods_from_db:
     #     all_products = types.InlineKeyboardButton(text=prod[1], callback_data=str(prod[0]))
     #

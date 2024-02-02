@@ -3,7 +3,7 @@ class Test:
         self.a = a
         self.b = b
         print(a+b)
-        return a+b
 
-    def Print_a(self,a):
+    @staticmethod
+    def print_a(a):
         print(a)

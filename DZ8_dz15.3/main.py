@@ -12,13 +12,14 @@ geo = Nominatim(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKi
 selected_lang = {}
 texts = {"welcome_message": {"rus": "Здравствуйте.", "eng": "Welcome."},
          "reg_begin": {"rus": "Начало регистрации. Введите имя.", "eng": "Registration start. Enter your name."},
-         "name_res": {"rus":"Имя получено, отправьте номер.", "eng": "Name received, send the number."},
-         "loc_res": {"rus":"Номер получен, отправьте локацию.", "eng": "Number received, send the location."},
-         "send_but": {"rus":"Отправьте по кнопке.", "eng": "Send using the button."},
-         "reg_suc": {"rus":"Регистрация успешна.", "eng": "Registration successful."},
-         "lang_choose": {"rus":"Добро пожаловать. Выберите удобный для вас язык", "eng": "Welcome. Choose your preferred language"},
-         "set_lang": {"rus":"Установлен язык: Русский.", "eng": "Your language has beet set to: English"},
-         "wait": {"rus":"Ожидайте дальнейшей доработки", "eng": "Wait next repair"},
+         "name_res": {"rus": "Имя получено, отправьте номер.", "eng": "Name received, send the number."},
+         "loc_res": {"rus": "Номер получен, отправьте локацию.", "eng": "Number received, send the location."},
+         "send_but": {"rus": "Отправьте по кнопке.", "eng": "Send using the button."},
+         "reg_suc": {"rus": "Регистрация успешна.", "eng": "Registration successful."},
+         "lang_choose": {"rus": "Добро пожаловать. Выберите удобный для вас язык",
+                         "eng": "Welcome. Choose your preferred language"},
+         "set_lang": {"rus": "Установлен язык: Русский.", "eng": "Your language has beet set to: English"},
+         "wait": {"rus": "Ожидайте дальнейшей доработки", "eng": "Wait next repair"},
          # "": {"rus":"", "eng": ""},
 
          }
@@ -36,7 +37,8 @@ def start(message):
     lang_choose = lang_choice(user_id, "lang_choose")
     lang_choose1 = lang_choice(user_id, "wait")
     if check:
-        # bot.send_message(user_id, f"Здравствуйте, '{message.from_user.first_name}', выберите удобный для вас язык.", reply_markup=bt.lang())
+        # bot.send_message(user_id, f"Здравствуйте, '{message.from_user.first_name}', выберите удобный для вас язык.",
+        # reply_markup=bt.lang())
         bot.send_message(user_id, lang_choose1)
     else:
         bot.send_message(user_id, lang_choose, reply_markup=bt.lang())

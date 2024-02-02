@@ -30,7 +30,6 @@
 # print(tup[::-1])
 
 
-
 # Циклы
 # list_exam = ['T', 'h', 'i', 's', ' ', 'i', 's', ' ', 'h', 'o', 'w', ' ', 'w', 'e', ' ', 'd', 'o']
 # for i in list_exam:
@@ -44,7 +43,6 @@
 # while i <= 6:
 #     print("Элемент")
 #     list_1.pop()
-
 
 
 # list comprehension
@@ -76,7 +74,7 @@
 # print(key_dict)
 
 
-#Сеты
+# Сеты
 # set_1 = ("Hello", "Hello", "Hello", "World", "World")
 # set_2 = set(set_1)
 # print(set_2)
@@ -107,7 +105,6 @@
 # def step(*args):
 #     return args
 # print(step(1, 2, 3, 4, 5))
-
 
 
 # Классы, атрибуты, методы
@@ -173,7 +170,8 @@
 # print(Test.test_func())
 
 
-# Этот декоратор не особо понял, потому, что всё работет без него, если написать print(object_1.equil()) вместо print(object_1.equil)
+# Этот декоратор не особо понял, потому, что всё работет без него,
+# если написать print(object_1.equil()) вместо print(object_1.equil)
 # class Square:
 #     def __init__(self, storona_a, storona_b):
 #         self.storona_a = storona_a
@@ -186,9 +184,6 @@
 # print(object_1.equil)
 # object_1.storona_b = 5
 # print(object_1.equil)
-
-
-
 
 
 # Базы данных (базу не запускал)

@@ -5,7 +5,7 @@ class Person:
 
 
 User1 = Person(name='Pavel', age=25)
-User2 = Person(name='Misha',age=30)
+User2 = Person(name='Misha', age=30)
 
 print(User1.name)
 print(User1.age)

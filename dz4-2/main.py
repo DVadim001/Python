@@ -26,11 +26,10 @@ while True:
     elif action.lower() == 'продукты':
         print(all_products)
 
-
     elif action.lower() == 'удалить':
         product_to_delete = input('Введите товар для удаления: ')
         product_count_delete = int(input('Введите количество для удаления: '))
         if product_to_delete in korzina[0].keys():
-            korzina.pop(product_to_delete) # исп цикл for
+            korzina.pop(product_to_delete)
     else:
         print('Неизвестная операция')

@@ -14,7 +14,6 @@ geolocator = Nominatim(user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) App
 users = {}
 
 
-
 # Обработка команды start
 @bot.message_handler(commands=["start"])
 def start_message(message):
@@ -162,7 +161,6 @@ def get_user_product(call):
            f'Количество на складе: {prod[2]}\n' \
            f'Цена: ${prod[4]}'
     bot.send_photo(chat_id, photo=prod[3], caption=text, reply_markup=bt.choose_pr_count())
-
 
 
 # Обработка команды admin

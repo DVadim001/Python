@@ -6,6 +6,7 @@ sql = connection.cursor()
 sql.execute("CREATE TABLE IF NOT EXISTS clients (name TEXT, surname TEXT, phone TEXT, balance FLOAT, percent FLOAT);")
 connection.commit()
 
+
 def add_client():
     name = input("Введите имя: ")
     surname = input("Введите фамилию: ")
@@ -13,8 +14,12 @@ def add_client():
     balance = input("Введите баланс: ")
 
     sql = connection.cursor()
-    sql.execute(f"INSERT INTO clients (name, surname, phone, balance) VALUES('{name}', '{surname}', '{phone}', '{balance}') ;")
+    sql.execute(f"INSERT INTO clients (name, surname, phone, balance) VALUES('{name}', "
+                f"'{surname}', "
+                f"'{phone}', "
+                f"'{balance}') ;")
     connection.commit()
+
 
 def view_percent():
     name = input("Введите имя: ")
@@ -32,17 +37,19 @@ def view_percent():
     print(sql.execute(f"SELECT * FROM clients WHERE name ='{name}' ;").fetchone())
     connection.commit()
 
+
 def view_clients():
     sql = connection.cursor()
-    print(sql.execute("SELECT * FROM clients;").fetchall() )
+    print(sql.execute("SELECT * FROM clients;").fetchall())
     connection.commit()
+
 
 def find_client():
     inp = input("Ведите критерии поиска клиента (имя или телефон): ")
     if inp.lower() == 'имя':
         name = input("Ведите имя клиента: ")
         sql = connection.cursor()
-        print(sql.execute(f" SELECT * FROM clients WHERE name = '{name}' ;" ).fetchone() )
+        print(sql.execute(f" SELECT * FROM clients WHERE name = '{name}' ;").fetchone())
         connection.commit()
     elif inp.lower() == 'телефон':
         phone = input("Ведите номер клиента: ")
@@ -52,18 +59,21 @@ def find_client():
     else:
         print("Введены неправильные критерии.")
 
+
 def view_balance():
     name = input("Введите имя клиента: ")
     sql = connection.cursor()
-    print(sql.execute(f"SELECT balance FROM clients WHERE name ='{name}' ;").fetchone() )
+    print(sql.execute(f"SELECT balance FROM clients WHERE name ='{name}' ;").fetchone())
     connection.commit()
+
 
 def balance_operation():
     name = input("Введите имя клиента: ")
     balance = input("Укажите новый баланс: ")
     sql = connection.cursor()
-    print(sql.execute(f"UPDATE clients SET balance = '{balance}' WHERE name ='{name}' ;").fetchone() )
+    print(sql.execute(f"UPDATE clients SET balance = '{balance}' WHERE name ='{name}' ;").fetchone())
     connection.commit()
+
 
 def delete_client():
     name = input("Введите имя клиента: ")
@@ -72,7 +82,8 @@ def delete_client():
     connection.commit()
 
 
-# Добавить клиента, список клиентов, поиск клиентов по номеру или имени, проверка баланса, изменить баланс, удалить клиента, посмотреть процент
+# Добавить клиента, список клиентов, поиск клиентов по номеру или имени, проверка баланса,
+# изменить баланс, удалить клиента, посмотреть процент
 help = input("Введите помощь для выбора нужного действия: ")
 if help.lower() == "помощь":
     print("добавить, список, поиск, баланс, процент, изменить, удалить")

@@ -119,7 +119,7 @@ def make_order(user_id):
     amount = sql.execute("SELECT pr_amount FROM cart WHERE user_id=?;", (user_id,)).fetchone()
     pr_quantity = sql.execute("SELECT pr_count FROM products WHERE pr_name=?;", (pr_name[0],)).fetchone()
     new_quantity = pr_quantity[0] - amount[0]
-    sql.execute("UPDATE products SET pr_count=? WHERE pr_name=?;", (new_quantity,pr_name[0]))
+    sql.execute("UPDATE products SET pr_count=? WHERE pr_name=?;", (new_quantity, pr_name[0]))
     info = sql.execute("SELECT * FROM cart WHERE user_id=?;", (user_id,)).fetchone()
     address = sql.execute("SELECT location FROM users WHERE id=?;", (user_id,)).fetchone()
     # Фиксируем изменения
